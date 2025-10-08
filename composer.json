@@ -1,0 +1,11 @@
+{
+    "name": "italo/mvc",
+    "description": "MVC structure",
+    "authors": [
+        {
+            "name": "Italo-fullStack",
+            "email": "italosoares1p@gmail.com"
+        }
+    ],
+    "require": {}
+}
