@@ -1,11 +1,15 @@
 {
-    "name": "italo/mvc",
-    "description": "MVC structure",
+    "name": "pichau/mvc",
     "authors": [
         {
             "name": "Italo-fullStack",
             "email": "italosoares1p@gmail.com"
         }
     ],
+    "autoload": {
+        "psr-4": {
+            "App\\": "app/"
+        }
+    },
     "require": {}
 }
