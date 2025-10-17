@@ -1,6 +1,8 @@
 <?php
-require_once 'C:\xampp\htdocs\php\MVC\app\controllers\HomeController.php';
-require_once 'C:\xampp\htdocs\php\MVC\app\controllers\errors\HttpErrorController.php';
+namespace App\Core;
+
+use App\Controllers\HomeController;
+use App\Controllers\Errors\HttpErrorController;
 
 class Router{
     public function dispatch($url){
@@ -10,14 +12,14 @@ class Router{
         $controllerName = ucfirst($controllerName).'Controller';
         if(!class_exists($controllerName)){
             $controller = new HttpErrorController;
-            $controller->NotFound();
+            $controller->notFound();
             return;
         }
         $controller = new $controllerName();
         $actionName = $parts[1] ?? 'index';
         if(!method_exists($controllerName, $actionName)){
             $controller = new HttpErrorController;
-            $controller->NotFound();
+            $controller->notFound();
             return;
         }
         $params = array_slice($parts, 2);   
