@@ -9,7 +9,7 @@ class Router{
         $url = trim($url, '/');
         $parts = $url ? explode('/', $url): [];
         $controllerName = $parts[0] ?? 'Home';
-        $controllerName = ucfirst($controllerName).'Controller';
+        $controllerName = 'App\Controllers\\' . ucfirst($controllerName).'Controller';
         if(!class_exists($controllerName)){
             $controller = new HttpErrorController;
             $controller->notFound();
@@ -17,6 +17,7 @@ class Router{
         }
         $controller = new $controllerName();
         $actionName = $parts[1] ?? 'index';
+
         if(!method_exists($controllerName, $actionName)){
             $controller = new HttpErrorController;
             $controller->notFound();
