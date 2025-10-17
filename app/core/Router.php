@@ -1,6 +1,8 @@
 <?php
 namespace App\Core;
 
+
+
 use App\Controllers\HomeController;
 use App\Controllers\Errors\HttpErrorController;
 
@@ -17,13 +19,14 @@ class Router{
         }
         $controller = new $controllerName();
         $actionName = $parts[1] ?? 'index';
+        
 
         if(!method_exists($controllerName, $actionName)){
             $controller = new HttpErrorController;
             $controller->notFound();
             return;
         }
-        $params = array_slice($parts, 2);   
+        $params = array_slice($parts, 2);
         call_user_func_array([$controller, $actionName], $params);
     }
 }
