@@ -8,6 +8,20 @@ use PDOException;
 
 class Database{
     private $connection = null;
+    private static $instance = null;
+
+    private function __construct()
+    {
+        $this->connect();
+    }
+
+    public static function getInstance(){
+        if(self::$instance == null){
+            self::$instance = new self();
+        }
+        return self::$instance;
+    }
+
     public function connect(){
         $host = 'localhost';
         $dbname = 'mvc';
@@ -31,9 +45,6 @@ class Database{
 
     }
     public function query($sql, $params = []){
-        if(!$this->connection){
-            $this->connect();
-        }
         try{
             $stmt = $this->connection->prepare($sql);
             $stmt->execute($params);
