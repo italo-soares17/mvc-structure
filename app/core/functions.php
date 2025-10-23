@@ -20,3 +20,8 @@ function dd(...$vars){
     
     die();
 }
+
+function config($key, $default = null){
+    $config = require 'C:/xampp/htdocs/php/MVC/app/config/config.php';
+    return $config[$key] ?? $default;
+}

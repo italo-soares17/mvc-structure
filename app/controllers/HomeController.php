@@ -12,9 +12,8 @@ class HomeController extends Controller{
         $usuario = new Usuario();
         $data = $usuario->getUserData();
 
-        $consulta = $usuario->testDb();
-        dd($consulta);
-
+        echo 'usuario com id 1: ' . $usuario->getUserById(1)['name'] . '<br>';
+        echo 'Total de usuarios: ' . $usuario->getUsersCount() . '<br>';
         $this->view('home/index', $data);
     }
     public function contact(){

@@ -14,6 +14,25 @@ class Database{
     {
         $this->connect();
     }
+    public function fetch($sql, $params = []): array {
+        $stmt = $this->query($sql, $params);
+        return $stmt->fetch();
+    }
+    public function fetchAll($sql, $params = []): array {
+        $stmt = $this->query($sql, $params);
+        return $stmt->fetchAll();
+    }
+    
+    public function execute($sql, $params = []): int {
+        $stmt = $this->query($sql, $params);
+        return $stmt->rowCount();
+    }
+    public function lastInsertId(): int {
+        return $this->connection->lastInsertId();
+    }
+    public function rowCount(): int {
+        return $this->connection->rowCount();
+    }
 
     public static function getInstance(){
         if(self::$instance == null){
@@ -23,20 +42,16 @@ class Database{
     }
 
     public function connect(){
-        $host = 'localhost';
-        $dbname = 'mvc';
-        $username = 'root';
-        $password = 'Italo02122008';
-        $charset = 'utf8mb4';
+        $dataBaseConfig = config('database');
 
-        $dsn = "mysql:host=$host;dbname=$dbname;charset=$charset";
+        $dsn = "mysql:host={$dataBaseConfig['host']};dbname={$dataBaseConfig['dbname']};charset={$dataBaseConfig['charset']}";
 
         $options = [
             \PDO::ATTR_ERRMODE => \PDO::ERRMODE_EXCEPTION,
             \PDO::ATTR_DEFAULT_FETCH_MODE => \PDO::FETCH_ASSOC,
         ];
         try{
-            $this->connection = new \PDO($dsn, $username, $password, $options);
+            $this->connection = new \PDO($dsn, $dataBaseConfig['user'], $dataBaseConfig['password'], $options);
             return;
         } catch (PDOException $e){
             throw new \Exception('erro de conexao: ' . $e->getMessage());

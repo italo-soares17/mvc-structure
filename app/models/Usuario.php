@@ -11,9 +11,20 @@ class Usuario extends Model{
             'Email' => 'Italo@gmail.com'
         ];
     }
-        public function testDb(){
-        $sql = 'SELECT 1+3 AS test';
-        $result = $this->db->query($sql);
-        return $result->fetch();
+    public function createUser($name){
+        $sql = 'INSERT INTO users (name) VALUES (:name)';
+        $params = ['name' => $name];
+        return $this->db->execute($sql, $params);
+    }
+    public function getAllUsers(){
+        $users = $this->db->fetchAll('SELECT * FROM users');
+        return $users;
+    }
+    public function getUserById($id){
+        return $this->db->fetch('SELECT * FROM users WHERE id = :id', ['id' => $id]);
+    }
+    public function getUsersCount(){
+        $result = $this->db->fetch('SELECT COUNT(*) as count FROM users');
+        return $result['count'];
     }
 }
